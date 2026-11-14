@@ -1,0 +1,4 @@
+# Short link printed on the lantern QR codes.
+# 302 (temporary) so the target can change later without reprinting.
+/yipeng    /work/japan-capstone/yipeng   302
+/yipeng/   /work/japan-capstone/yipeng   302
