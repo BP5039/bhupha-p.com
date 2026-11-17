@@ -1,0 +1,46 @@
+---
+// One project on the home page (and later on /work).
+// With an href the whole card is a link; without one it shows a "coming soon" note.
+interface Props {
+  title: string;
+  summary: string;
+  tags: string;
+  tint: string;
+  href?: string;
+  linkLabel?: string;
+  note?: string;
+}
+
+const { title, summary, tags, tint, href, linkLabel, note } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+<Tag class="card" href={href}>
+  <div class="thumb" style={`background:${tint}`} aria-hidden="true">{title}</div>
+  <div class="body">
+    <h3>{title}</h3>
+    <p class="summary">{summary}</p>
+    <p class="tags">{tags}</p>
+    {href && <p class="more">{linkLabel} →</p>}
+    {!href && note && <p class="note">{note}</p>}
+  </div>
+</Tag>
+
+<style>
+  .card {
+    display: flex; flex-direction: column;
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    overflow: hidden; color: var(--navy); text-decoration: none;
+  }
+  a.card:hover { border-color: var(--navy); color: var(--navy); }
+  .thumb {
+    height: 150px; display: flex; align-items: flex-end; padding: 16px 20px;
+    font-size: 28px; font-weight: 700; color: var(--navy);
+  }
+  .body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  h3 { margin: 0; font-size: 20px; }
+  p { margin: 0; }
+  .summary { font-size: 16px; line-height: 1.55; }
+  .tags { font-size: 14px; color: var(--ink-soft); }
+  .more { margin-top: auto; padding-top: 8px; font-weight: 700; color: var(--terracotta); }
+  .note { margin-top: auto; padding-top: 8px; font-size: 14px; color: var(--ink-soft); }
+</style>
