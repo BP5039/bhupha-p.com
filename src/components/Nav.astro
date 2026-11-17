@@ -1,0 +1,37 @@
+---
+// Site-wide navigation. Only links that already lead somewhere are listed;
+// add a line here as each new page goes live.
+const links = [
+  { href: '/#work', label: 'Work' },
+  { href: '/#contact', label: 'Contact' },
+];
+---
+<header class="nav">
+  <div class="container wide nav-inner">
+    <a class="brand" href="/">Bhupha P.</a>
+    <nav aria-label="Main">
+      <ul>
+        {links.map((link) => (
+          <li><a href={link.href}>{link.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(251, 246, 236, 0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; justify-content: space-between; align-items: center; min-height: 60px; }
+  .brand { font-weight: 700; font-size: 18px; color: var(--navy); text-decoration: none; padding: 10px 0; }
+  ul { display: flex; gap: 4px 24px; flex-wrap: wrap; list-style: none; margin: 0; padding: 0; }
+  li a {
+    display: inline-flex; align-items: center; min-height: 44px;
+    color: var(--navy); text-decoration: none; font-weight: 600; font-size: 15px;
+  }
+  li a:hover, .brand:hover { color: var(--terracotta); }
+</style>

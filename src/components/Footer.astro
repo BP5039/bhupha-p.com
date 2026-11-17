@@ -1,0 +1,22 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="container wide footer-inner">
+    <span>© {year} Bhupha Phanphaeng · Chiang Mai</span>
+    <span class="links">
+      <a href="https://github.com/BP5039">GitHub</a>
+      <a href="https://www.linkedin.com/in/bhupha-phanphaeng/">LinkedIn</a>
+    </span>
+  </div>
+</footer>
+
+<style>
+  .footer { border-top: 1px solid var(--line); margin-top: 48px; }
+  .footer-inner {
+    display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; align-items: center;
+    padding-top: 20px; padding-bottom: 28px; font-size: 14px; color: var(--ink-soft);
+  }
+  .links { display: flex; gap: 20px; }
+  .links a { display: inline-flex; align-items: center; min-height: 44px; }
+</style>
