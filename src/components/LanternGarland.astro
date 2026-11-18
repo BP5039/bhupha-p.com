@@ -1,0 +1,26 @@
+---
+// Decorative string of small lanterns across the top of the hero.
+const colors = ['#b4462f', '#f2c6de', '#c9a24a', '#c6def1', '#b4462f', '#c9e4de', '#c9a24a', '#dbcdf0', '#b4462f'];
+// The string sags in the middle: y = 8 + sag at each lantern position.
+const lanterns = colors.map((fill, i) => {
+  const x = 20 + i * 40;
+  const t = (x - 180) / 180;
+  const y = 8 + 22 * (1 - t * t);
+  return { x, y, fill };
+});
+---
+<svg class="garland" viewBox="0 0 360 80" preserveAspectRatio="xMidYMin meet" aria-hidden="true">
+  <path d="M0 8 Q180 52 360 8" stroke="#c9a24a" stroke-width="1.5" fill="none" />
+  {lanterns.map(({ x, y, fill }) => (
+    <g transform={`translate(${x} ${y})`}>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#c9a24a" stroke-width="1" />
+      <rect x="-4" y="6" width="8" height="3" rx="1" fill="#1f2a44" />
+      <path d="M-7 9 L7 9 L9 26 Q0 31 -9 26 Z" fill={fill} stroke="#1f2a44" stroke-width="1" />
+      <path d="M-4 30 L-5 40 M0 31 L0 42 M4 30 L5 40" stroke="#c9a24a" stroke-width="1" />
+    </g>
+  ))}
+</svg>
+
+<style>
+  .garland { width: 100%; max-width: 520px; height: auto; display: block; margin: 0 auto; }
+</style>
