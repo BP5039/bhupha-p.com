@@ -1,5 +1,5 @@
 ---
-// Decorative string of small lanterns across the top of the hero.
+// Decorative string of small octagonal lanterns across the top of the hero.
 const colors = ['#b4462f', '#f2c6de', '#c9a24a', '#c6def1', '#b4462f', '#c9e4de', '#c9a24a', '#dbcdf0', '#b4462f'];
 // The string sags in the middle: y = 8 + sag at each lantern position.
 const lanterns = colors.map((fill, i) => {
@@ -9,14 +9,14 @@ const lanterns = colors.map((fill, i) => {
   return { x, y, fill };
 });
 ---
-<svg class="garland" viewBox="0 0 360 80" preserveAspectRatio="xMidYMin meet" aria-hidden="true">
+<svg class="garland" viewBox="0 0 360 86" preserveAspectRatio="xMidYMin meet" aria-hidden="true">
   <path d="M0 8 Q180 52 360 8" stroke="#c9a24a" stroke-width="1.5" fill="none" />
   {lanterns.map(({ x, y, fill }) => (
     <g transform={`translate(${x} ${y})`}>
-      <line x1="0" y1="0" x2="0" y2="6" stroke="#c9a24a" stroke-width="1" />
-      <rect x="-4" y="6" width="8" height="3" rx="1" fill="#1f2a44" />
-      <path d="M-7 9 L7 9 L9 26 Q0 31 -9 26 Z" fill={fill} stroke="#1f2a44" stroke-width="1" />
-      <path d="M-4 30 L-5 40 M0 31 L0 42 M4 30 L5 40" stroke="#c9a24a" stroke-width="1" />
+      <line x1="0" y1="0" x2="0" y2="5" stroke="#c9a24a" stroke-width="1" />
+      <g transform="translate(-13 5) scale(0.13)">
+        <path d="M80 160 L86 171 L80 182 L86 193 L80 204 L86 215 L80 226 L86 237 L80 248 L86 259 L100 296 L114 259 L120 248 L114 237 L120 226 L114 215 L120 204 L114 193 L120 182 L114 171 L120 160 Z" fill={fill} /><path d="M86 40 L72 2 L97 40 Z M114 40 L128 2 L103 40 Z M96 40 L100 22 L104 40 Z" fill={fill} /><path d="M86 40 L114 40 L148 76 L148 124 L114 160 L86 160 L52 124 L52 76 Z" fill={fill} stroke="#c9a24a" stroke-width="9" stroke-linejoin="round" /><path d="M52 76 L74 76 L74 124 L52 124 Z M148 76 L126 76 L126 124 L148 124 Z" fill="#000" fill-opacity="0.15" /><path d="M52 76 L148 76 M52 124 L148 124" stroke="#c9a24a" stroke-width="9" />
+      </g>
     </g>
   ))}
 </svg>
