@@ -1,13 +1,98 @@
 ---
-// The Yi Peng lantern page. Japanese first, English below.
+// The Yi Peng gift page. Japanese first, English below (or one at a time with the toggle).
 // Linked from the QR code via the short link bhupha-p.com/yipeng.
+//
+// All the words live in the `content` object below, once per language.
+// The markup further down is written once and reused for both languages.
 import Base from '../../../layouts/Base.astro';
 import LanternArt from '../../../components/LanternArt.astro';
+import TungArt from '../../../components/TungArt.astro';
+import LanternGarland from '../../../components/LanternGarland.astro';
 import LangToggle from '../../../components/LangToggle.vue';
+
+const content = {
+  ja: {
+    label: '日本語',
+    thanks: [
+      'JALESEAプログラムを温かくご支援いただき、心より感謝申し上げます。',
+      '感謝の気持ちを込めて、私たちの街チェンマイから、ランナー地方（タイ北部）の伝統の品をお贈りします。',
+    ],
+    giftsHeading: 'お贈りしたもの',
+    khom: {
+      name: 'コム（ランタン）',
+      thai: 'โคม',
+      what: '竹の骨組みに紙や布を張った、ランナー地方の吊りランタンです。イーペン祭りの時期には、家や寺院の軒先に飾られます。',
+      meaning: '灯りは仏さまへの祈りであり、災いを遠ざけ、幸運を招くと伝えられています。窓辺や玄関など、お好きな場所に吊るしてお楽しみください。',
+    },
+    tung: {
+      name: 'トゥン（旗）',
+      thai: 'ตุง',
+      what: '「トゥン」はランナーの言葉で「旗」を意味します。細長く垂らして飾るもので、布や紙、木などで作られます。この贈り物は、象の模様を織り込んだ布に竹ひごを通したものです。',
+      meaning: 'お寺に奉納して功徳を積むためのもので、お祝いの場や家にも飾られ、吉祥のしるしとされています。壁や窓辺に掛けてお飾りください。',
+    },
+    festivalHeading: 'イーペン祭りとは',
+    festival: [
+      '「イー」は「2」、「ペン」は「満月」。ランナー暦2月の満月（毎年11月ごろ）に行われる、タイ北部の光の祭りです。2026年は11月24日前後に祝われます。',
+      '人々はお寺で功徳を積み、家も街も寺院も、たくさんの灯りで彩られます。',
+    ],
+    aroundHeading: '祭りの風景',
+    aroundIntro: 'チェンマイとタイ北部のお祭りで出会えるものを、少しだけご紹介します。',
+    tiles: [
+      { name: 'コム・ローイ', sub: '空のランタン', text: '夜空に放つ紙のランタン。熱気球のようにゆっくり昇っていきます。' },
+      { name: 'パーン・プラティープ', sub: '素焼きの灯明', text: '家の門や寺院にずらりと並べる、小さな素焼きの灯りです。' },
+      { name: 'ロイクラトン', sub: '灯籠流し', text: '同じ満月の夜、花で飾った灯籠「クラトン」を川に流します。' },
+      { name: 'パレード', sub: '行列', text: '灯りで飾った大きなクラトンの山車と行列が、街を進みます。' },
+      { name: '踊り', sub: 'フォーン', text: '「フォーン・レップ」（爪の舞）など、優雅なランナーの舞踊。' },
+      { name: '音楽', sub: 'サローとスン', text: '弦楽器の「サロー」と「スン」が奏でる、やさしい音色。' },
+      { name: 'お菓子', sub: 'カオテーン', text: 'もち米を揚げて、さとうきびの蜜をかけた北部の素朴なお菓子。' },
+      { name: 'おもちゃ', sub: '凧とこま', text: 'お祭りで子どもたちが遊ぶ、昔ながらのおもちゃです。' },
+    ],
+  },
+  en: {
+    label: 'English',
+    thanks: [
+      'Thank you for your warm support of the JALESEA program.',
+      'As a token of our thanks, please accept these traditional gifts from our city, Chiang Mai, in the Lanna region of Northern Thailand.',
+    ],
+    giftsHeading: 'Your gifts',
+    khom: {
+      name: 'Khom (lantern)',
+      thai: 'โคม',
+      what: 'A Lanna hanging lantern made of paper or cloth over a bamboo frame. During Yi Peng, they are hung at the entrances of homes and temples.',
+      meaning: 'Its light is an offering to the Buddha, and is said to send away misfortune and invite good luck. Hang it by a window, at your door, or anywhere you like.',
+    },
+    tung: {
+      name: 'Tung (banner)',
+      thai: 'ตุง',
+      what: '"Tung" is the Lanna word for a flag: a long, narrow hanging banner made of cloth, paper or wood. Yours is woven cloth with elephant motifs, held flat by thin bamboo slats.',
+      meaning: 'Tung are offered at temples to make merit, hung at celebrations and in homes, and seen as a sign of good fortune. Hang it on a wall or by a window.',
+    },
+    festivalHeading: 'What is Yi Peng?',
+    festival: [
+      '"Yi" means "two" and "peng" means "full moon". It is Northern Thailand\'s festival of light, held on the full moon of the second month of the Lanna calendar, usually in November. In 2026 it falls around 24 November.',
+      'People make merit at temples, and homes, streets and temples glow with lights.',
+    ],
+    aroundHeading: 'Around the festival',
+    aroundIntro: 'A few things you would meet at festivals in Chiang Mai and the North.',
+    tiles: [
+      { name: 'Khom loi', sub: 'Sky lanterns', text: 'Paper lanterns released into the night sky, rising slowly like hot-air balloons.' },
+      { name: 'Phang prathip', sub: 'Clay lamps', text: 'Small clay lamps set out in rows at house gates and temples.' },
+      { name: 'Loy Krathong', sub: 'Floating offerings', text: 'On the same full-moon night, flower-covered floats called krathong are set on the river.' },
+      { name: 'Parade', sub: 'Procession', text: 'Large lit-up krathong floats and processions move through the city.' },
+      { name: 'Dance', sub: 'Fon', text: 'Graceful Lanna dances such as fon lep, the fingernail dance.' },
+      { name: 'Music', sub: 'Salo and sueng', text: 'The gentle sound of two Lanna string instruments, the salo and the sueng.' },
+      { name: 'Snacks', sub: 'Khao taen', text: 'A simple Northern treat: fried sticky-rice cakes drizzled with sugarcane syrup.' },
+      { name: 'Toys', sub: 'Kites and tops', text: 'Old-fashioned toys that children play with at fairs and festivals.' },
+    ],
+  },
+} as const;
+
+const langs = ['ja', 'en'] as const;
+const tints = ['var(--pink)', 'var(--blue)', 'var(--mint)', 'var(--lilac)'];
 ---
 <Base
   title="チェンマイからの贈り物 | A gift from Chiang Mai"
-  description="イーペン祭りとランナーのランタン「コム」について。About the Lanna lantern (khom) and the Yi Peng festival of Chiang Mai."
+  description="ランナーのランタン「コム」と旗「トゥン」、そしてイーペン祭りについて。About the Lanna lantern (khom), banner (tung) and the Yi Peng festival of Chiang Mai."
   lang="ja"
   chrome={false}
 >
@@ -27,80 +112,68 @@ import LangToggle from '../../../components/LangToggle.vue';
 
   <main>
     <section class="hero">
+      <LanternGarland />
       <div class="container">
-        <LanternArt />
         <h1>チェンマイからの贈り物</h1>
         <p class="sub" lang="en">A gift from Chiang Mai</p>
       </div>
     </section>
 
-    <!-- ============ 日本語 ============ -->
-    <article id="ja" class="container lang-block" lang="ja">
-      <section>
-        <h2>感謝を込めて</h2>
-        <p>JALESEAプログラムを温かくご支援いただき、心より感謝申し上げます。皆様のおかげで、私たちは2年間日本語を学び、こうして日本を訪れることができました。</p>
-        <p>感謝の気持ちを込めて、私たちの街チェンマイから、ランナー地方の伝統的なランタンをお贈りします。</p>
-      </section>
+    {langs.map((lang) => {
+      const t = content[lang];
+      return (
+        <article id={lang} class="lang-block" lang={lang}>
+          <div class="container">
+            <p class="eyebrow">{t.label}</p>
 
-      <section>
-        <h2>このランタンについて</h2>
-        <p>このランタンは、タイ北部の言葉で「コム」（โคม）と呼ばれます。チェンマイを中心とするタイ北部は、かつて「ランナー王国」として栄えた地域で、今も独自の文化が受け継がれています。</p>
-        <p>コムは竹の骨組みに紙や布を張って作られ、いくつかの種類があります。</p>
-        <ul class="types">
-          <li><strong>コム・ケーン</strong>（吊るすランタン）：家や寺院の軒先に飾ります。</li>
-          <li><strong>コム・トゥー</strong>（手に持つランタン）：棒に下げて持ち歩きます。</li>
-          <li><strong>コム・パット</strong>（回るランタン）：ろうそくの熱でくるくると回ります。</li>
-          <li><strong>コム・ローイ</strong>（空に放つランタン）：熱気球のように夜空へ昇ります。</li>
-        </ul>
-      </section>
+            <section class="thanks">
+              {t.thanks.map((line) => <p>{line}</p>)}
+            </section>
 
-      <section>
-        <h2>イーペン祭り</h2>
-        <p>「イーペン」はランナー地方の言葉で、「イー」は「2」、「ペン」は「満月」を意味します。ランナー暦の2月の満月の日（タイ中部の暦では12月、毎年11月ごろ）に行われる光の祭りで、2026年は11月24日前後に祝われます。</p>
-        <p>人々はお寺を訪れて功徳を積み、小さな素焼きの灯明「パーン・プラティープ」を灯し、家や寺院をたくさんのコムで飾ります。同じ夜、タイ全土では灯籠流しの「ロイクラトン」も行われます。</p>
-      </section>
+            <section>
+              <h2>{t.giftsHeading}</h2>
+              <div class="gifts">
+                <div class="gift">
+                  <div class="gift-art"><LanternArt /></div>
+                  <div class="gift-body">
+                    <h3>{t.khom.name} <span class="thai" lang="th">{t.khom.thai}</span></h3>
+                    <p>{t.khom.what}</p>
+                    <p>{t.khom.meaning}</p>
+                  </div>
+                </div>
+                <div class="gift">
+                  <div class="gift-art"><TungArt /></div>
+                  <div class="gift-body">
+                    <h3>{t.tung.name} <span class="thai" lang="th">{t.tung.thai}</span></h3>
+                    <p>{t.tung.what}</p>
+                    <p>{t.tung.meaning}</p>
+                  </div>
+                </div>
+              </div>
+            </section>
 
-      <section>
-        <h2>ランタンに込められた願い</h2>
-        <p>イーペンの灯りは、天上にあるとされる仏舎利の仏塔「プラ・ケート・ケーオ・チュラーマニー」への祈りであり、災いや悲しみを遠ざけるためのものと伝えられています。</p>
-        <p>このコムが、皆様のお家に明るい光と幸運をもたらしますように。</p>
-      </section>
-    </article>
+            <section>
+              <h2>{t.festivalHeading}</h2>
+              {t.festival.map((line) => <p>{line}</p>)}
+            </section>
 
-    <!-- ============ English ============ -->
-    <article id="en" class="container lang-block" lang="en">
-      <p class="eyebrow">English</p>
-
-      <section>
-        <h2>With gratitude</h2>
-        <p>Thank you for your warm support of the JALESEA program. Because of you, we were able to study Japanese for two years and visit Japan.</p>
-        <p>As a token of our thanks, please accept this traditional Lanna lantern from our city, Chiang Mai.</p>
-      </section>
-
-      <section>
-        <h2>About this lantern</h2>
-        <p>In Northern Thai, this lantern is called a <em>khom</em> (โคม). Northern Thailand, centered on Chiang Mai, was once the Lanna Kingdom, and its own culture lives on today.</p>
-        <p>Khom are made from paper or cloth stretched over a bamboo frame, and come in several kinds:</p>
-        <ul class="types">
-          <li><strong>Khom khwaen</strong> (hanging lantern): hung at the entrances of homes and temples.</li>
-          <li><strong>Khom thue</strong> (carried lantern): carried hanging from a stick.</li>
-          <li><strong>Khom phat</strong> (revolving lantern): turns slowly from the heat of its candle.</li>
-          <li><strong>Khom loi</strong> (sky lantern): rises into the night sky like a hot-air balloon.</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>The Yi Peng festival</h2>
-        <p>In the Lanna language, <em>yi</em> means "two" and <em>peng</em> means "full moon". Yi Peng is a festival of light held on the full moon of the second month of the Lanna calendar (the twelfth month in the Central Thai calendar, usually in November). In 2026 it falls around 24 November.</p>
-        <p>People make merit at temples, light small clay lamps called <em>phang prathip</em>, and decorate their homes and temples with khom. On the same night, the rest of Thailand celebrates Loy Krathong by floating offerings on the water.</p>
-      </section>
-
-      <section>
-        <h2>The wish inside the lantern</h2>
-        <p>The lights of Yi Peng are offered to the Phra Ket Kaew Chulamani, a stupa in the heavens believed to hold a relic of the Buddha, and are said to send away misfortune and sorrow.</p>
-        <p>May this khom bring warm light and good fortune to your home.</p>
-      </section>
-    </article>
+            <section>
+              <h2>{t.aroundHeading}</h2>
+              <p class="intro">{t.aroundIntro}</p>
+              <ul class="tiles">
+                {t.tiles.map((tile, i) => (
+                  <li style={`background:${tints[i % tints.length]}`}>
+                    <strong>{tile.name}</strong>
+                    <span class="tile-sub">{tile.sub}</span>
+                    <span class="tile-text">{tile.text}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </div>
+        </article>
+      );
+    })}
 
     <section class="container sign">
       <div class="card">
@@ -137,26 +210,53 @@ import LangToggle from '../../../components/LangToggle.vue';
   :global(html[data-lang='ja']) #en,
   :global(html[data-lang='en']) #ja { display: none; }
   :global(html[data-lang='en']) .hero h1 { display: none; }
-  :global(html[data-lang='en']) .sub { font-size: clamp(1.7rem, 7vw, 2.4rem); font-weight: 700; color: var(--navy); margin-top: 20px; }
+  :global(html[data-lang='en']) .sub { font-size: clamp(1.7rem, 7vw, 2.4rem); font-weight: 700; color: var(--navy); margin-top: 12px; }
   :global(html[data-lang]) #en { border-top: 0; }
   :global(html[data-lang]) .eyebrow { display: none; }
 
-  .hero { padding: 40px 0 16px; text-align: center; }
-  .hero h1 { font-size: clamp(1.7rem, 7vw, 2.4rem); margin-top: 20px; }
+  .hero { padding: 0 0 8px; text-align: center; }
+  .hero h1 { font-size: clamp(1.7rem, 7vw, 2.4rem); margin-top: 12px; }
   .sub { color: var(--ink-soft); margin: 0; font-family: var(--font-sans); }
 
-  .lang-block { padding-top: 24px; padding-bottom: 24px; scroll-margin-top: 64px; }
-  .lang-block section { padding: 20px 0; border-bottom: 1px solid var(--line); }
-  .lang-block section:last-child { border-bottom: 0; }
-  .lang-block h2 { font-size: 1.3rem; color: var(--terracotta); }
+  .lang-block { padding: 8px 0 16px; scroll-margin-top: 64px; }
+  .lang-block section { padding: 20px 0; }
+  .lang-block h2 { font-size: 1.35rem; color: var(--terracotta); margin-bottom: 12px; }
+  .lang-block p { margin: 0 0 10px; }
   #en { border-top: 3px double var(--line); }
   .eyebrow {
     margin: 16px 0 0; font-size: 12px; font-weight: 700;
     letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft);
   }
+  #ja .eyebrow { display: none; }
+  .thanks { text-align: center; }
 
-  .types { padding-left: 1.2em; margin: 0; }
-  .types li { margin: 6px 0; }
+  .gifts { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .gift {
+    background: #fff; border: 1.5px solid var(--navy); border-radius: var(--radius);
+    overflow: hidden; display: flex; flex-direction: column;
+  }
+  .gift-art {
+    display: flex; justify-content: center; align-items: center;
+    padding: 18px 0 14px; background: var(--cream); border-bottom: 1px solid var(--line);
+  }
+  .gift-body { padding: 16px 18px 8px; }
+  .gift-body h3 { font-size: 1.15rem; margin-bottom: 8px; }
+  .thai { font-weight: 400; color: var(--ink-soft); font-size: 0.95rem; margin-left: 4px; }
+  .gift-body p { font-size: 0.97rem; }
+
+  .intro { color: var(--ink-soft); font-size: 0.95rem; }
+  .tiles {
+    list-style: none; margin: 14px 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;
+  }
+  .tiles li {
+    border-radius: 12px; padding: 14px 14px 16px;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .tiles strong { font-size: 1rem; line-height: 1.4; }
+  .tile-sub { font-size: 0.8rem; color: #3a4257; }
+  .tile-text { font-size: 0.88rem; line-height: 1.6; margin-top: 6px; }
+  :lang(en) .tile-text { line-height: 1.5; }
 
   .sign { padding-top: 16px; padding-bottom: 40px; display: grid; gap: 16px; }
   .card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; }
