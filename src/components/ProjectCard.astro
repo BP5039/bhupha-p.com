@@ -14,7 +14,7 @@ interface Props {
 const { title, summary, tags, tint, href, linkLabel, note } = Astro.props;
 const Tag = href ? 'a' : 'div';
 ---
-<Tag class="card" href={href}>
+<Tag class="card" href={href} data-tilt>
   <div class="thumb" style={`background:${tint}`} aria-hidden="true">{title}</div>
   <div class="body">
     <h3>{title}</h3>
@@ -25,13 +25,37 @@ const Tag = href ? 'a' : 'div';
   </div>
 </Tag>
 
+<script>
+  // Cards lean slightly toward the mouse and lift. Mouse only, and off when the
+  // visitor has asked their device for reduced motion.
+  const canTilt =
+    window.matchMedia('(hover: hover)').matches &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (canTilt) {
+    document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((card) => {
+      card.addEventListener('pointermove', (event) => {
+        const box = card.getBoundingClientRect();
+        const x = (event.clientX - box.left) / box.width - 0.5;
+        const y = (event.clientY - box.top) / box.height - 0.5;
+        card.style.transform = `perspective(800px) rotateY(${x * 6}deg) rotateX(${y * -6}deg) translateY(-4px)`;
+      });
+      card.addEventListener('pointerleave', () => {
+        card.style.transform = '';
+      });
+    });
+  }
+</script>
+
 <style>
   .card {
     display: flex; flex-direction: column;
     background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
     overflow: hidden; color: var(--ink); text-decoration: none;
+    transition: transform 0.2s ease-out, border-color 0.2s ease, box-shadow 0.2s ease;
   }
   a.card:hover { border-color: var(--accent); color: var(--ink); }
+  .card:hover { box-shadow: 0 16px 32px -22px rgba(15, 20, 31, 0.5); }
   .thumb {
     height: 150px; display: flex; align-items: flex-end; padding: 16px 20px;
     font-size: 28px; font-weight: 700; color: var(--heading);

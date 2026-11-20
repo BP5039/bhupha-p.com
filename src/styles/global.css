@@ -1,9 +1,10 @@
 /* Design tokens.
    Every page uses one theme: the classic navy / white / black / grey of the CV.
    Components use the semantic tokens (--bg, --ink, --accent...), never raw colors,
-   so the whole site can switch look (for example a dark mode) by redefining
-   the tokens under a data-theme value on <html>. Drawings (lanterns, tung) keep
-   their own colors. */
+   so the whole site switches look by redefining the tokens.
+   Dark mode: follows the device setting, unless the visitor picked a theme with
+   the toggle in the nav, which sets data-theme="light" or "dark" on <html>.
+   Drawings (lanterns, tung) keep their own colors, except outlines (--drawing-line). */
 :root {
   /* Raw colors */
   --navy: #1f2a44;
@@ -24,6 +25,8 @@
   --nav-bg: rgba(255, 255, 255, 0.92);
   --tint-a: #e8ecf3;
   --tint-b: #dde3ec;
+  --drawing-line: var(--navy);
+  color-scheme: light;
 
   /* System fonts only: no font downloads, so pages load fast on phone data.
      Japanese phones already ship good Japanese fonts. */
@@ -33,6 +36,47 @@
   --radius: 14px;
   --max: 720px;
   --max-wide: 1040px;
+}
+
+/* Dark theme, written twice: once for "device is dark and no choice was made",
+   once for "visitor chose dark with the toggle". */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0f141f;
+    --surface: #171e2c;
+    --ink: #e4e7ee;
+    --heading: #f4f6fa;
+    --ink-soft: #9aa3b5;
+    --line: #273046;
+    --accent: #dfe5f2;
+    --accent-hover: #ffffff;
+    --on-accent: #1f2a44;
+    --link: #aebee4;
+    --link-hover: #dfe5f2;
+    --nav-bg: rgba(15, 20, 31, 0.9);
+    --tint-a: #1b2333;
+    --tint-b: #222b3e;
+    --drawing-line: #cfd6e4;
+    color-scheme: dark;
+  }
+}
+:root[data-theme='dark'] {
+  --bg: #0f141f;
+  --surface: #171e2c;
+  --ink: #e4e7ee;
+  --heading: #f4f6fa;
+  --ink-soft: #9aa3b5;
+  --line: #273046;
+  --accent: #dfe5f2;
+  --accent-hover: #ffffff;
+  --on-accent: #1f2a44;
+  --link: #aebee4;
+  --link-hover: #dfe5f2;
+  --nav-bg: rgba(15, 20, 31, 0.9);
+  --tint-a: #1b2333;
+  --tint-b: #222b3e;
+  --drawing-line: #cfd6e4;
+  color-scheme: dark;
 }
 
 
@@ -56,6 +100,13 @@ body {
 
 img { max-width: 100%; height: auto; display: block; }
 
+body { transition: background-color 0.25s ease, color 0.25s ease; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
 a { color: var(--link); text-underline-offset: 3px; }
 a:hover { color: var(--link-hover); }
 
@@ -74,4 +125,5 @@ h1, h2, h3 { line-height: 1.3; margin: 0 0 0.5em; color: var(--heading); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  body { transition: none; }
 }

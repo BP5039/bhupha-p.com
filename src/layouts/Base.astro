@@ -10,8 +10,6 @@ interface Props {
   lang?: string;
   /** Set to false for standalone pages that bring their own header (the lantern page). */
   chrome?: boolean;
-  /** Site theme. Only 'classic' for now; a dark theme can be added later. */
-  theme?: 'classic';
 }
 
 const {
@@ -19,16 +17,23 @@ const {
   description = 'Bhupha Phanphaeng - Software Engineering student at CAMT, Chiang Mai University.',
   lang = 'en',
   chrome = true,
-  theme = 'classic',
 } = Astro.props;
 ---
 <!doctype html>
-<html lang={lang} data-theme={theme}>
+<html lang={lang}>
   <head>
+    <!-- Apply a saved light/dark choice before the page paints, so it never flashes. -->
+    <script is:inline>
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+      } catch (e) {}
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0f141f" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
   </head>
