@@ -88,7 +88,7 @@ const content = {
 } as const;
 
 const langs = ['ja', 'en'] as const;
-const tints = ['var(--pink)', 'var(--blue)', 'var(--mint)', 'var(--lilac)'];
+const tints = ['var(--tint-a)', 'var(--tint-b)'];
 ---
 <Base
   title="チェンマイからの贈り物 | A gift from Chiang Mai"
@@ -192,7 +192,7 @@ const tints = ['var(--pink)', 'var(--blue)', 'var(--mint)', 'var(--lilac)'];
 <style>
   .top {
     position: sticky; top: 0; z-index: 10;
-    background: rgba(251, 246, 236, 0.92);
+    background: var(--nav-bg);
     backdrop-filter: blur(6px);
     border-bottom: 1px solid var(--line);
   }
@@ -201,16 +201,16 @@ const tints = ['var(--pink)', 'var(--blue)', 'var(--mint)', 'var(--lilac)'];
   .lang { display: flex; gap: 6px; }
   .lang a {
     display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px;
-    border: 1.5px solid var(--navy); border-radius: 999px;
-    color: var(--navy); text-decoration: none; font-size: 14px; font-weight: 600;
+    border: 1.5px solid var(--accent); border-radius: 999px;
+    color: var(--accent); text-decoration: none; font-size: 14px; font-weight: 600;
   }
-  .lang a:hover { background: var(--navy); color: var(--cream); }
+  .lang a:hover { background: var(--accent); color: var(--on-accent); }
 
   /* The toggle sets data-lang on <html>; hide the other language. */
   :global(html[data-lang='ja']) #en,
   :global(html[data-lang='en']) #ja { display: none; }
   :global(html[data-lang='en']) .hero h1 { display: none; }
-  :global(html[data-lang='en']) .sub { font-size: clamp(1.7rem, 7vw, 2.4rem); font-weight: 700; color: var(--navy); margin-top: 12px; }
+  :global(html[data-lang='en']) .sub { font-size: clamp(1.7rem, 7vw, 2.4rem); font-weight: 700; color: var(--heading); margin-top: 12px; }
   :global(html[data-lang]) #en { border-top: 0; }
   :global(html[data-lang]) .eyebrow { display: none; }
 
@@ -220,7 +220,7 @@ const tints = ['var(--pink)', 'var(--blue)', 'var(--mint)', 'var(--lilac)'];
 
   .lang-block { padding: 8px 0 16px; scroll-margin-top: 64px; }
   .lang-block section { padding: 20px 0; }
-  .lang-block h2 { font-size: 1.35rem; color: var(--terracotta); margin-bottom: 12px; }
+  .lang-block h2 { font-size: 1.35rem; color: var(--heading); margin-bottom: 12px; }
   .lang-block p { margin: 0 0 10px; }
   #en { border-top: 3px double var(--line); }
   .eyebrow {
@@ -232,12 +232,12 @@ const tints = ['var(--pink)', 'var(--blue)', 'var(--mint)', 'var(--lilac)'];
 
   .gifts { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
   .gift {
-    background: #fff; border: 1.5px solid var(--navy); border-radius: var(--radius);
+    background: var(--bg); border: 1.5px solid var(--accent); border-radius: var(--radius);
     overflow: hidden; display: flex; flex-direction: column;
   }
   .gift-art {
     display: flex; justify-content: center; align-items: center;
-    padding: 18px 0 14px; background: var(--cream); border-bottom: 1px solid var(--line);
+    padding: 18px 0 14px; background: var(--surface); border-bottom: 1px solid var(--line);
   }
   .gift-body { padding: 16px 18px 8px; }
   .gift-body h3 { font-size: 1.15rem; margin-bottom: 8px; }
@@ -254,21 +254,21 @@ const tints = ['var(--pink)', 'var(--blue)', 'var(--mint)', 'var(--lilac)'];
     display: flex; flex-direction: column; gap: 2px;
   }
   .tiles strong { font-size: 1rem; line-height: 1.4; }
-  .tile-sub { font-size: 0.8rem; color: #3a4257; }
+  .tile-sub { font-size: 0.8rem; color: var(--ink-soft); }
   .tile-text { font-size: 0.88rem; line-height: 1.6; margin-top: 6px; }
   :lang(en) .tile-text { line-height: 1.5; }
 
   .sign { padding-top: 16px; padding-bottom: 40px; display: grid; gap: 16px; }
-  .card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; }
+  .card { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; }
   .card p { margin: 0; }
   .name { font-weight: 700; }
   .role { color: var(--ink-soft); font-size: 15px; }
   .cta {
     display: flex; align-items: center; justify-content: center; min-height: 52px;
-    background: var(--navy); color: var(--cream); border-radius: 12px;
+    background: var(--accent); color: var(--on-accent); border-radius: 12px;
     text-decoration: none; font-weight: 700; text-align: center; padding: 0 16px;
   }
-  .cta:hover { background: var(--terracotta); color: #fff; }
+  .cta:hover { background: var(--accent-hover); color: var(--on-accent); }
 
   .foot { padding-bottom: 32px; text-align: center; font-size: 13px; color: var(--ink-soft); }
 </style>

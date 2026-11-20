@@ -39,7 +39,7 @@ onMounted(() => {
 <style scoped>
 .toggle {
   display: flex;
-  border: 1.5px solid var(--navy);
+  border: 1.5px solid var(--accent);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -48,14 +48,14 @@ button {
   padding: 0 14px;
   border: 0;
   background: transparent;
-  color: var(--navy);
+  color: var(--accent);
   font: inherit;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
 }
 button[aria-pressed='true'] {
-  background: var(--navy);
-  color: var(--cream);
+  background: var(--accent);
+  color: var(--on-accent);
 }
 </style>

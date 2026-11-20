@@ -1,14 +1,29 @@
-/* Design tokens: the workshop palette, reused as the site's identity. */
+/* Design tokens.
+   Every page uses one theme: the classic navy / white / black / grey of the CV.
+   Components use the semantic tokens (--bg, --ink, --accent...), never raw colors,
+   so the whole site can switch look (for example a dark mode) by redefining
+   the tokens under a data-theme value on <html>. Drawings (lanterns, tung) keep
+   their own colors. */
 :root {
-  --cream: #fbf6ec;
+  /* Raw colors */
   --navy: #1f2a44;
-  --terracotta: #b4462f;
-  --ink-soft: #4a4f5c;
-  --line: #e6dfd0;
-  --pink: #f2c6de;
-  --blue: #c6def1;
-  --mint: #c9e4de;
-  --lilac: #dbcdf0;
+  --navy-light: #3a4a6e;
+
+  /* Semantic tokens: classic theme */
+  --bg: #ffffff;
+  --surface: #f4f5f7;
+  --ink: #16181d;
+  --heading: var(--navy);
+  --ink-soft: #5b6170;
+  --line: #e3e6eb;
+  --accent: var(--navy);
+  --accent-hover: var(--navy-light);
+  --on-accent: #ffffff;
+  --link: var(--navy);
+  --link-hover: var(--navy-light);
+  --nav-bg: rgba(255, 255, 255, 0.92);
+  --tint-a: #e8ecf3;
+  --tint-b: #dde3ec;
 
   /* System fonts only: no font downloads, so pages load fast on phone data.
      Japanese phones already ship good Japanese fonts. */
@@ -20,6 +35,7 @@
   --max-wide: 1040px;
 }
 
+
 *, *::before, *::after { box-sizing: border-box; }
 
 html {
@@ -29,8 +45,8 @@ html {
 
 body {
   margin: 0;
-  background: var(--cream);
-  color: var(--navy);
+  background: var(--bg);
+  color: var(--ink);
   font-family: var(--font-sans);
   font-size: 17px;
   line-height: 1.7;
@@ -40,10 +56,10 @@ body {
 
 img { max-width: 100%; height: auto; display: block; }
 
-a { color: var(--terracotta); text-underline-offset: 3px; }
-a:hover { color: var(--navy); }
+a { color: var(--link); text-underline-offset: 3px; }
+a:hover { color: var(--link-hover); }
 
-h1, h2, h3 { line-height: 1.3; margin: 0 0 0.5em; }
+h1, h2, h3 { line-height: 1.3; margin: 0 0 0.5em; color: var(--heading); }
 
 .container {
   width: 100%;

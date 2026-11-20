@@ -22,16 +22,17 @@ const links = [
 <style>
   .nav {
     position: sticky; top: 0; z-index: 10;
-    background: rgba(251, 246, 236, 0.92);
+    background: var(--nav-bg);
     backdrop-filter: blur(6px);
     border-bottom: 1px solid var(--line);
   }
   .nav-inner { display: flex; justify-content: space-between; align-items: center; min-height: 60px; }
-  .brand { font-weight: 700; font-size: 18px; color: var(--navy); text-decoration: none; padding: 10px 0; }
+  .brand { font-weight: 700; font-size: 18px; color: var(--heading); text-decoration: none; padding: 10px 0; }
   ul { display: flex; gap: 4px 24px; flex-wrap: wrap; list-style: none; margin: 0; padding: 0; }
   li a {
     display: inline-flex; align-items: center; min-height: 44px;
-    color: var(--navy); text-decoration: none; font-weight: 600; font-size: 15px;
+    color: var(--heading); text-decoration: none; font-weight: 600; font-size: 15px;
   }
-  li a:hover, .brand:hover { color: var(--terracotta); }
+  li a:hover, .brand:hover { color: var(--accent-hover); }
+  li a:hover { text-decoration: underline; text-underline-offset: 6px; }
 </style>
