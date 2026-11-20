@@ -5,6 +5,7 @@
 // - Touch or keyboard: tap / press the card to switch sides. No movement.
 // - Reduced motion setting: no tilt or drift, sides still switch.
 // Pass real photos with the `front` and `back` props; until then, placeholders show.
+// The bass icon is an electric bass drawn upright on a 24 x 24 grid and tilted 45 degrees.
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 const props = defineProps<{
@@ -61,7 +62,7 @@ function toggle(event: MouseEvent) {
     <svg class="doodle d-code" style="--d: 1.4" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5" /></svg>
     <svg class="doodle d-note" style="--d: -1" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l11-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="17" cy="16" r="3" /></svg>
     <svg class="doodle d-lantern" style="--d: 1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1v2M10 3h4l3 3v6l-3 3h-4l-3-3V6zM7 6h10M7 12h10M11 15l-1 6M13 15l1 6M12 15v7" /></svg>
-    <svg class="doodle d-bass" style="--d: -1.6" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 10.5L21 3M19 2l3 3M8 16l5-5" /><ellipse cx="8.5" cy="15.5" rx="5" ry="3.6" transform="rotate(-45 8.5 15.5)" /></svg>
+    <svg class="doodle d-bass" style="--d: -1.6" viewBox="0 0 24 24" aria-hidden="true"><g transform="rotate(45 12 12) translate(0 0.3) scale(1)"><path d="M11.25 .6h1.5l.4 3.1h-2.3z" /><path d="M10.3 1.3h.8M10.4 2.8h.8M12.9 1.3h.8M12.8 2.8h.8" /><path d="M11.45 3.7v10M12.55 3.7v10" /><path d="M11.45 13.7c-.5-1.7-1.9-2.7-2.6-1.8-.4.6.3 1.5.1 2.5-.2 1-1.2 1.6-1.2 3.2 0 2.4 1.9 4.1 4.1 4.1h.3c2.3 0 4.1-1.7 4.1-3.9 0-1.5-.9-2.1-1.1-3-.2-.9.5-1.5.2-2.2-.4-.8-1.4-.3-1.8.5" /><path d="M10.9 16.4h2.2M10.6 19.2h2.8" /></g></svg>
     <svg class="doodle d-camera" style="--d: 1.1" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg>
     <span class="doodle d-kana" style="--d: -1.2" lang="ja" aria-hidden="true">あ</span>
 
@@ -84,7 +85,7 @@ function toggle(event: MouseEvent) {
       <span class="face back">
         <img v-if="props.back" :src="props.back" :alt="props.backAlt ?? 'Bhupha playing bass'" />
         <span v-else class="placeholder dark">
-          <svg class="big-bass" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 10.5L21 3M19 2l3 3M8 16l5-5" /><ellipse cx="8.5" cy="15.5" rx="5" ry="3.6" transform="rotate(-45 8.5 15.5)" /></svg>
+          <svg class="big-bass" viewBox="0 0 24 24" aria-hidden="true"><g transform="rotate(45 12 12) translate(0 0.3) scale(1)"><path d="M11.25 .6h1.5l.4 3.1h-2.3z" /><path d="M10.3 1.3h.8M10.4 2.8h.8M12.9 1.3h.8M12.8 2.8h.8" /><path d="M11.45 3.7v10M12.55 3.7v10" /><path d="M11.45 13.7c-.5-1.7-1.9-2.7-2.6-1.8-.4.6.3 1.5.1 2.5-.2 1-1.2 1.6-1.2 3.2 0 2.4 1.9 4.1 4.1 4.1h.3c2.3 0 4.1-1.7 4.1-3.9 0-1.5-.9-2.1-1.1-3-.2-.9.5-1.5.2-2.2-.4-.8-1.4-.3-1.8.5" /><path d="M10.9 16.4h2.2M10.6 19.2h2.8" /></g></svg>
           <span class="ph-label">Off duty: bass photo goes here</span>
         </span>
       </span>
