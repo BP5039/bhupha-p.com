@@ -2,6 +2,7 @@
 // Site-wide navigation. Only links that already lead somewhere are listed;
 // add a line here as each new page goes live.
 import ThemeToggle from './ThemeToggle.astro';
+import Signature from './Signature.astro';
 const links = [
   { href: '/work', label: 'Work' },
   { href: '/about', label: 'About' },
@@ -14,7 +15,7 @@ const isCurrent = (href: string) => !href.includes('#') && (path === href || pat
 ---
 <header class="nav">
   <div class="container wide nav-inner">
-    <a class="brand" href="/">Bhupha P.</a>
+    <a class="brand" href="/" aria-label="Bhupha Phanphaeng, home"><Signature label="Bhupha Phanphaeng" /></a>
     <nav aria-label="Main">
       <ul>
         {links.map((link) => (
@@ -35,7 +36,9 @@ const isCurrent = (href: string) => !href.includes('#') && (path === href || pat
   }
   .nav-inner { display: flex; align-items: center; gap: 8px 20px; min-height: 60px; }
   .brand { margin-right: auto; }
-  .brand { font-weight: 700; font-size: 18px; color: var(--heading); text-decoration: none; padding: 10px 0; }
+  .brand { display: flex; align-items: center; height: 44px; padding: 6px 0; color: var(--heading); text-decoration: none; transition: transform 0.2s ease; }
+  .brand:hover { transform: rotate(-3deg) scale(1.04); }
+  @media (prefers-reduced-motion: reduce) { .brand:hover { transform: none; } }
   ul { display: flex; gap: 4px 24px; flex-wrap: wrap; list-style: none; margin: 0; padding: 0; }
   li a {
     display: inline-flex; align-items: center; min-height: 44px;
