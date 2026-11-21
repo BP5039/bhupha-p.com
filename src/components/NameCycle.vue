@@ -82,7 +82,7 @@ onBeforeUnmount(() => window.clearInterval(timer));
 /* Japanese glyphs fill the whole em box, so they look bigger than Latin
    letters at the same size. Scale them down to match the Latin cap height. */
 .txt {
-  text-decoration: underline dotted var(--line);
+  text-decoration: underline dotted var(--highlight);
   text-decoration-thickness: 3px;
   text-underline-offset: 0.14em;
 }

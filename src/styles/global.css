@@ -1,18 +1,20 @@
 /* Design tokens.
-   Every page uses one theme: the classic navy / white / black / grey of the CV.
+   Light mode: the classic navy / white / grey of the CV, with orange as the one highlight.
+   Dark mode: one navy hue throughout; layers only step up in lightness, so the page,
+   cards and text feel like one family. Orange stays the highlight.
    Components use the semantic tokens (--bg, --ink, --accent...), never raw colors,
    so the whole site switches look by redefining the tokens.
-   Dark mode: follows the device setting, unless the visitor picked a theme with
-   the toggle in the nav, which sets data-theme="light" or "dark" on <html>.
-   Drawings (lanterns, tung) keep their own colors, except outlines (--drawing-line). */
+   The theme control in the nav sets data-theme="light" or "dark" on <html>
+   (Auto follows the device). Drawings keep their own colors, except outlines (--drawing-line). */
 :root {
   /* Raw colors */
   --navy: #1f2a44;
   --navy-light: #3a4a6e;
 
-  /* Semantic tokens: classic theme */
+  /* Semantic tokens: light theme */
   --bg: #ffffff;
   --surface: #f4f5f7;
+  --raised: #eaecf0;
   --ink: #16181d;
   --heading: var(--navy);
   --ink-soft: #5b6170;
@@ -26,6 +28,12 @@
   --tint-a: #e8ecf3;
   --tint-b: #dde3ec;
   --drawing-line: var(--navy);
+  /* Highlight: one small contrasting color for labels, the progress bar and active states.
+     A darker orange on white so it stays readable. */
+  --highlight: #c2410c;
+  /* Section titles: navy in light mode, orange in dark mode. */
+  --section-title: var(--heading);
+  --section-line: var(--heading);
   color-scheme: light;
 
   /* Body text uses system fonts, so pages load fast on phone data.
@@ -44,40 +52,50 @@
    once for "visitor chose dark with the toggle". */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --bg: #0f141f;
-    --surface: #171e2c;
-    --ink: #e4e7ee;
-    --heading: #f4f6fa;
-    --ink-soft: #9aa3b5;
-    --line: #273046;
-    --accent: #dfe5f2;
+    --bg: #121621;
+    --surface: #1a2030;
+    --raised: #222a3f;
+    --ink: #dcdee5;
+    --heading: #eeeff2;
+    --ink-soft: #9198ab;
+    --line: #262f46;
+    --accent: #dadde7;
     --accent-hover: #ffffff;
-    --on-accent: #1f2a44;
-    --link: #aebee4;
-    --link-hover: #dfe5f2;
-    --nav-bg: rgba(15, 20, 31, 0.9);
-    --tint-a: #1b2333;
-    --tint-b: #222b3e;
-    --drawing-line: #cfd6e4;
+    --on-accent: #121621;
+    --link: #a8b9e6;
+    --link-hover: #dadde7;
+    --nav-bg: rgba(18, 22, 33, 0.9);
+    --tint-a: #1a2030;
+    --tint-b: #222a3f;
+    --drawing-line: #c6c9d2;
+    --highlight: #fb923c;
+    --on-highlight: #1a1206;
+    --section-title: var(--highlight);
+    --section-line: var(--highlight);
     color-scheme: dark;
   }
 }
 :root[data-theme='dark'] {
-  --bg: #0f141f;
-  --surface: #171e2c;
-  --ink: #e4e7ee;
-  --heading: #f4f6fa;
-  --ink-soft: #9aa3b5;
-  --line: #273046;
-  --accent: #dfe5f2;
+  --bg: #121621;
+  --surface: #1a2030;
+  --raised: #222a3f;
+  --ink: #dcdee5;
+  --heading: #eeeff2;
+  --ink-soft: #9198ab;
+  --line: #262f46;
+  --accent: #dadde7;
   --accent-hover: #ffffff;
-  --on-accent: #1f2a44;
-  --link: #aebee4;
-  --link-hover: #dfe5f2;
-  --nav-bg: rgba(15, 20, 31, 0.9);
-  --tint-a: #1b2333;
-  --tint-b: #222b3e;
-  --drawing-line: #cfd6e4;
+  --on-accent: #121621;
+  --link: #a8b9e6;
+  --link-hover: #dadde7;
+  --nav-bg: rgba(18, 22, 33, 0.9);
+  --tint-a: #1a2030;
+  --tint-b: #222a3f;
+  --drawing-line: #c6c9d2;
+  --highlight: #fb923c;
+  --on-highlight: #1a1206;
+  --section-title: var(--highlight);
+  --section-line: var(--highlight);
   color-scheme: dark;
 }
 
@@ -115,6 +133,23 @@ a:hover { color: var(--link-hover); }
 h1, h2, h3 { line-height: 1.3; margin: 0 0 0.5em; color: var(--heading); font-family: var(--font-display); }
 h1 { font-weight: 800; letter-spacing: -0.01em; }
 h2 { font-weight: 750; }
+
+/* Small labels above headings (ABOUT, WORK, NOW...). */
+.eyebrow { color: var(--highlight) !important; }
+
+/* Buttons in dark mode: orange main button, pale filled second button.
+   (Light mode keeps each page's navy and outline buttons.)
+   .btn.btn only raises priority over each page's own button styles. */
+:root[data-theme='dark'] .btn.btn.primary { background: var(--highlight); border-color: var(--highlight); color: var(--on-highlight); }
+:root[data-theme='dark'] .btn.btn.primary:hover { background: var(--highlight); border-color: var(--highlight); color: var(--on-highlight); filter: brightness(1.08); }
+:root[data-theme='dark'] .btn.btn:not(.primary) { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+:root[data-theme='dark'] .btn.btn:not(.primary):hover { background: #ffffff; border-color: #ffffff; color: var(--on-accent); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .btn.btn.primary { background: var(--highlight); border-color: var(--highlight); color: var(--on-highlight); }
+  :root:not([data-theme='light']) .btn.btn.primary:hover { background: var(--highlight); border-color: var(--highlight); color: var(--on-highlight); filter: brightness(1.08); }
+  :root:not([data-theme='light']) .btn.btn:not(.primary) { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  :root:not([data-theme='light']) .btn.btn:not(.primary):hover { background: #ffffff; border-color: #ffffff; color: var(--on-accent); }
+}
 
 .container {
   width: 100%;
