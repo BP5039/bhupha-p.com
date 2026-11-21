@@ -1,0 +1,81 @@
+---
+// /resume: the full CV as a web page. Data from src/data/profile.ts.
+// No phone number here on purpose: it stays in the PDFs sent directly to employers.
+import Base from '../layouts/Base.astro';
+import EntryList from '../components/EntryList.astro';
+import {
+  headline, summary, skills, projects, experience, education, recognition, activities, languages, downloads,
+} from '../data/profile';
+---
+<Base title="Resume | Bhupha Phanphaeng">
+  <main class="container wide page">
+    <article class="sheet">
+      <header class="top">
+        <div>
+          <h1>Bhupha Phanphaeng</h1>
+          <p class="headline">{headline}</p>
+          <p class="links">
+            Chiang Mai, Thailand{' · '}
+            <a href="https://github.com/BP5039" target="_blank" rel="noopener noreferrer">github.com/BP5039</a>{' · '}
+            <a href="https://www.linkedin.com/in/bhupha-phanphaeng/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          </p>
+        </div>
+        {downloads.length > 0 && (
+          <div class="downloads">
+            {downloads.map((d) => <a class="btn" href={d.href} download>{d.label}</a>)}
+          </div>
+        )}
+      </header>
+
+      <section><h2>Profile</h2><p>{summary}</p></section>
+
+      <section>
+        <h2>Technical skills</h2>
+        <dl class="skills">
+          {skills.map((s) => (<><dt>{s.label}</dt><dd>{s.items}</dd></>))}
+        </dl>
+      </section>
+
+      <section><h2>Projects</h2><EntryList entries={projects} /></section>
+      <section><h2>Work experience</h2><EntryList entries={experience} /></section>
+      <section><h2>Education</h2><EntryList entries={education} compact /></section>
+      <section><h2>Certifications & recognition</h2><EntryList entries={recognition} compact /></section>
+      <section><h2>Activities & leadership</h2><EntryList entries={activities} compact /></section>
+
+      <section>
+        <h2>Languages</h2>
+        <p>{languages.map((l) => `${l.name} (${l.level})`).join(' · ')}</p>
+      </section>
+    </article>
+  </main>
+</Base>
+
+<style>
+  .page { padding-top: clamp(32px, 6vh, 64px); }
+  .sheet {
+    max-width: 860px; margin: 0 auto; background: var(--bg);
+    border: 1px solid var(--line); border-radius: var(--radius);
+    padding: clamp(22px, 5vw, 52px);
+  }
+  .top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding-bottom: 18px; border-bottom: 2px solid var(--heading); }
+  h1 { font-size: clamp(1.8rem, 5vw, 2.4rem); margin: 0; }
+  .headline { margin: 4px 0 6px; color: var(--ink-soft); }
+  .links { margin: 0; font-size: 0.92rem; color: var(--ink-soft); }
+  .downloads { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; }
+  .btn {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px;
+    border: 1.5px solid var(--accent); border-radius: 12px;
+    color: var(--accent); text-decoration: none; font-weight: 700; font-size: 0.95rem;
+  }
+  .btn:hover { background: var(--accent); color: var(--on-accent); }
+  section { margin-top: 30px; }
+  h2 { font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 12px; }
+  section > p { margin: 0; }
+  .skills { display: grid; grid-template-columns: max-content 1fr; gap: 6px 20px; margin: 0; font-size: 0.97rem; }
+  .skills dt { font-weight: 700; }
+  .skills dd { margin: 0; }
+  @media (max-width: 520px) {
+    .skills { grid-template-columns: 1fr; }
+    .skills dd { margin-bottom: 8px; }
+  }
+</style>
