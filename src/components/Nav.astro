@@ -25,7 +25,25 @@ const isCurrent = (href: string) => !href.includes('#') && (path === href || pat
     </nav>
     <ThemeToggle />
   </div>
+  <!-- Reading progress: a thin line that fills as you scroll. Shown on any page that scrolls. -->
+  <div class="progress" aria-hidden="true"><span data-progress></span></div>
 </header>
+
+<script>
+  // Reading progress.
+  const bar = document.querySelector<HTMLElement>('[data-progress]');
+  if (bar) {
+    const update = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const scrolls = max > 120; // any page that actually scrolls
+      bar.parentElement!.hidden = !scrolls;
+      if (scrolls) bar.style.transform = `scaleX(${Math.min(1, window.scrollY / max)})`;
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+  }
+</script>
 
 <style>
   .nav {
@@ -34,24 +52,45 @@ const isCurrent = (href: string) => !href.includes('#') && (path === href || pat
     backdrop-filter: blur(6px);
     border-bottom: 1px solid var(--line);
   }
-  .nav-inner { display: flex; align-items: center; gap: 8px 20px; min-height: 60px; }
-  .brand { margin-right: auto; }
-  .brand { display: flex; align-items: center; height: 44px; padding: 6px 0; color: var(--heading); text-decoration: none; transition: transform 0.2s ease; }
-  .brand:hover { transform: rotate(-3deg) scale(1.04); }
-  @media (prefers-reduced-motion: reduce) { .brand:hover { transform: none; } }
+  .nav-inner { display: flex; align-items: center; gap: 8px 32px; min-height: 60px; }
+  .brand {
+    display: flex; align-items: center; height: 44px; padding: 6px 0; margin-right: auto;
+    color: var(--heading); text-decoration: none; transition: transform 0.2s ease;
+  }
+  .brand:hover { color: var(--highlight); transform: rotate(-3deg) scale(1.04); }
+
   ul { display: flex; gap: 4px 24px; flex-wrap: wrap; list-style: none; margin: 0; padding: 0; }
   li a {
     display: inline-flex; align-items: center; min-height: 44px;
     color: var(--heading); text-decoration: none; font-weight: 600; font-size: 15px;
   }
-  li a:hover, .brand:hover { color: var(--accent-hover); }
+  li a:hover { color: var(--accent-hover); }
   li a:hover, li a[aria-current='page'] { text-decoration: underline; text-underline-offset: 6px; }
-  li a[aria-current='page'] { text-decoration-thickness: 2px; }
+  li a[aria-current='page'] { text-decoration-thickness: 2px; text-decoration-color: var(--highlight); }
 
-  /* Phones: links move to their own row under the name and theme button. */
+  .progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; pointer-events: none; }
+  .progress span { display: block; height: 100%; background: var(--highlight); transform: scaleX(0); transform-origin: left; }
+
+  /* Phones and tablets held upright: the signature sits centered on its own row,
+     larger, with the menu and the theme button on the row below. */
+  @media (max-width: 900px) {
+    .nav-inner { flex-wrap: wrap; justify-content: center; gap: 0 36px; padding-top: 8px; }
+    .brand { flex-basis: 100%; justify-content: center; margin-right: 0; height: 56px; padding: 4px 0 2px; }
+    /* Optical centering: the signature's weight sits right of its box (the long
+       stroke is thin, the B and P are heavy), so nudge it left about 4% of its width. */
+    .brand :global(.signature) { transform: translateX(-4%); }
+    nav { flex: 0 1 auto; min-width: 0; }
+    ul { justify-content: center; gap: 0 36px; flex-wrap: nowrap; }
+  }
   @media (max-width: 600px) {
-    .nav-inner { flex-wrap: wrap; padding-top: 6px; padding-bottom: 2px; }
-    nav { order: 3; flex-basis: 100%; }
-    ul { justify-content: space-between; gap: 0; }
+    .nav-inner { gap: 0 20px; }
+    nav { flex: 1; }
+    ul { justify-content: space-between; gap: 0 8px; }
+  }
+  @media (max-width: 380px) {
+    li a { font-size: 14px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .brand:hover { transform: none; }
   }
 </style>
