@@ -1,0 +1,83 @@
+---
+// /about: the story, a selection of experience, high school years and interests.
+// Most facts come from src/data/profile.ts (shared with /resume).
+import Base from '../layouts/Base.astro';
+import EntryList from '../components/EntryList.astro';
+import { experience, activities, earlier, languages, interests } from '../data/profile';
+---
+<Base title="About | Bhupha Phanphaeng">
+  <main class="container wide page">
+    <header class="intro">
+      <p class="eyebrow">About</p>
+      <h1>Hi again. I'm Bhupha <span lang="th">(ภูผา พันแพง)</span>.</h1>
+      <div class="story">
+        <p>I'm a final-year Software Engineering student at CAMT, Chiang Mai University. I build full-stack web apps, mostly with Vue, TypeScript and Firebase, and I care about how they feel to use.</p>
+        <p>I also like teaching. As a teaching assistant I ran online programming and business classes for high school students, and back in high school I led the IT side of a club that taught and ran activities for younger kids.</p>
+        <p>Outside of code I play bass, shoot film, edit video, and try my Japanese out on anyone who'll listen.</p>
+      </div>
+      <div class="actions">
+        <a class="btn primary" href="/resume">Full resume</a>
+        <a class="btn" href="/work">See my work</a>
+      </div>
+    </header>
+
+    <div class="cols">
+      <section class="main">
+        <h2>Experience</h2>
+        <EntryList entries={experience} />
+
+        <h2>Activities & leadership</h2>
+        <EntryList entries={activities} />
+
+        <h2>Earlier: high school</h2>
+        <EntryList entries={earlier} compact />
+      </section>
+
+      <aside class="side">
+        <section class="box">
+          <h2>Languages</h2>
+          <ul class="plain">
+            {languages.map((l) => <li><strong>{l.name}</strong><span>{l.level}</span></li>)}
+          </ul>
+        </section>
+        <section class="box">
+          <h2>Outside of code</h2>
+          <ul class="chips">
+            {interests.map((i) => <li>{i}</li>)}
+          </ul>
+        </section>
+      </aside>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .page { padding-top: clamp(40px, 8vh, 80px); }
+  .eyebrow { margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+  h1 { font-size: clamp(2rem, 6vw, 3rem); margin: 6px 0 16px; }
+  h1 span { font-weight: 600; color: var(--ink-soft); }
+  .story { max-width: 42em; font-size: clamp(1.02rem, 2.2vw, 1.12rem); }
+  .story p { margin: 0 0 12px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+  .btn {
+    display: inline-flex; align-items: center; min-height: 46px; padding: 0 20px;
+    border: 1.5px solid var(--accent); border-radius: 12px;
+    color: var(--accent); text-decoration: none; font-weight: 700;
+  }
+  .btn:hover { background: var(--accent); color: var(--on-accent); }
+  .btn.primary { background: var(--accent); color: var(--on-accent); }
+  .btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+
+  .cols { display: flex; flex-wrap: wrap; gap: 40px; margin-top: 56px; align-items: flex-start; }
+  .main { flex: 999 1 520px; min-width: 0; }
+  .side { flex: 1 1 260px; display: flex; flex-direction: column; gap: 20px; }
+  .main h2 { font-size: 1.4rem; margin: 40px 0 14px; padding-bottom: 8px; border-bottom: 2px solid var(--heading); }
+  .main h2:first-child { margin-top: 0; }
+  .box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; }
+  .box h2 { font-size: 1.05rem; margin: 0 0 12px; }
+  .plain { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 0.95rem; }
+  .plain li { display: flex; flex-direction: column; }
+  .plain span { color: var(--ink-soft); font-size: 0.88rem; }
+  .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips li { padding: 6px 12px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); font-size: 0.88rem; }
+</style>
