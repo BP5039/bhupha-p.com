@@ -1,0 +1,50 @@
+---
+// A list of CV-style entries: title, organisation, dates and bullet points.
+// Used by the About and Resume pages with data from src/data/profile.ts.
+import type { Entry } from '../data/profile';
+
+interface Props {
+  entries: Entry[];
+  compact?: boolean;
+}
+
+const { entries, compact = false } = Astro.props;
+---
+<ol class:list={['entries', { compact }]}>
+  {entries.map((e) => (
+    <li class="entry">
+      <div class="head">
+        <h3>
+          {e.title}
+          {e.upcoming && <span class="badge">Upcoming</span>}
+        </h3>
+        <span class="when">{e.when}</span>
+      </div>
+      {e.org && <p class="org">{e.org}</p>}
+      {e.points && (
+        <ul class="points">
+          {e.points.map((p) => <li>{p}</li>)}
+        </ul>
+      )}
+    </li>
+  ))}
+</ol>
+
+<style>
+  .entries { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .entry { padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .entry:first-child { padding-top: 0; }
+  .entry:last-child { border-bottom: 0; }
+  .head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 16px; }
+  h3 { font-size: 1.05rem; margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .when { font-size: 0.9rem; color: var(--ink-soft); white-space: nowrap; }
+  .org { margin: 2px 0 0; font-size: 0.95rem; color: var(--ink-soft); }
+  .points { margin: 8px 0 0; padding-left: 1.2em; font-size: 0.97rem; }
+  .points li { margin: 4px 0; }
+  .badge {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 999px; border: 1px solid var(--accent); color: var(--accent);
+  }
+  .compact .entry { padding: 12px 0; }
+  .compact .points { font-size: 0.93rem; }
+</style>
