@@ -3,6 +3,11 @@ import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import NameCycle from '../components/NameCycle.vue';
 import HeroPortrait from '../components/HeroPortrait.vue';
+import { getCollection } from 'astro:content';
+
+// Featured projects come from src/content/work/ (featured: true).
+const featured = (await getCollection('work', (p) => p.data.featured)).sort((a, b) => a.data.order - b.data.order);
+const tints = ['var(--tint-a)', 'var(--tint-b)'];
 
 // Short "what I'm doing now" items. Edit this list to update the strip.
 const now = [
@@ -39,23 +44,23 @@ const now = [
     </section>
 
     <section id="work" class="container wide block">
-      <h2>Featured work</h2>
+      <div class="section-head">
+        <h2>Featured work</h2>
+        <a href="/work">All projects →</a>
+      </div>
       <div class="grid">
-        <ProjectCard
-          title="TamBaan"
-          summary="A two-sided marketplace connecting Thai homeowners with renovation professionals. Senior project."
-          tags="Vue 3 · TypeScript · Firebase · Tailwind"
-          tint="var(--tint-a)"
-          note="Case study coming in December."
-        />
-        <ProjectCard
-          title="Japan Capstone 2026"
-          summary="A study trip to Osaka, Kobe and Tokyo, with a Thai craft workshop and Yi Peng lantern gifts for our hosts."
-          tags="Workshop design · Japanese + English"
-          tint="var(--tint-b)"
-          href="/work/japan-capstone/yipeng"
-          linkLabel="Read the lantern page"
-        />
+        {featured.map((p, i) => (
+          <ProjectCard
+            title={p.data.title}
+            kicker={`${p.data.kind} · ${p.data.when}`}
+            summary={p.data.summary}
+            tags={p.data.tags.join(' · ')}
+            tint={tints[i % tints.length]}
+            href={p.data.link}
+            linkLabel={p.data.linkLabel}
+            note={p.data.note}
+          />
+        ))}
       </div>
     </section>
 
@@ -102,5 +107,8 @@ const now = [
   .now ul { display: flex; flex-wrap: wrap; gap: 6px 32px; list-style: none; margin: 0; padding: 0; font-size: 16px; }
 
   .block { padding-top: clamp(48px, 9vh, 88px); }
+  .section-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 20px; margin-bottom: 20px; }
+  .section-head h2 { margin: 0; }
+  .section-head a { font-weight: 700; padding: 10px 0; }
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
 </style>
