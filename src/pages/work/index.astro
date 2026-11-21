@@ -1,0 +1,41 @@
+---
+// /work: every project, one card each, from the Markdown files in src/content/work/.
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const projects = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+const tints = ['var(--tint-a)', 'var(--tint-b)'];
+---
+<Base title="Work | Bhupha Phanphaeng" description="Projects by Bhupha Phanphaeng: software, teaching and design.">
+  <main class="container wide page">
+    <header class="intro">
+      <p class="eyebrow">Work</p>
+      <h1>Things I've built and made</h1>
+      <p class="lead">Software, teaching and design work. Case studies for the larger projects are on the way.</p>
+    </header>
+    <div class="grid">
+      {projects.map((p, i) => (
+        <ProjectCard
+          title={p.data.title}
+          kicker={`${p.data.kind} · ${p.data.when}`}
+          summary={p.data.summary}
+          tags={p.data.tags.join(' · ')}
+          tint={tints[i % tints.length]}
+          href={p.data.link}
+          linkLabel={p.data.linkLabel}
+          note={p.data.note}
+        />
+      ))}
+    </div>
+  </main>
+</Base>
+
+<style>
+  .page { padding-top: clamp(40px, 8vh, 80px); }
+  .intro { margin-bottom: 32px; }
+  .eyebrow { margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+  h1 { font-size: clamp(2rem, 6vw, 3rem); margin: 6px 0 12px; }
+  .lead { font-size: clamp(1.02rem, 2.2vw, 1.15rem); color: var(--ink-soft); max-width: 40em; margin: 0; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+</style>

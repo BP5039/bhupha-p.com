@@ -1,6 +1,7 @@
 ---
 // One project on the home page (and later on /work).
 // With an href the whole card is a link; without one it shows a "coming soon" note.
+// Links to other sites (starting with http) open in a new tab.
 interface Props {
   title: string;
   summary: string;
@@ -9,19 +10,28 @@ interface Props {
   href?: string;
   linkLabel?: string;
   note?: string;
+  kicker?: string;
 }
 
-const { title, summary, tags, tint, href, linkLabel, note } = Astro.props;
+const { title, summary, tags, tint, href, linkLabel, note, kicker } = Astro.props;
 const Tag = href ? 'a' : 'div';
+const external = href?.startsWith('http');
 ---
-<Tag class="card" href={href} data-tilt>
+<Tag
+  class="card"
+  href={href}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener noreferrer' : undefined}
+  data-tilt
+>
   <div class="thumb" style={`background:${tint}`} aria-hidden="true">{title}</div>
   <div class="body">
+    {kicker && <p class="kicker">{kicker}</p>}
     <h3>{title}</h3>
     <p class="summary">{summary}</p>
     <p class="tags">{tags}</p>
     {href && <p class="more">{linkLabel} →</p>}
-    {!href && note && <p class="note">{note}</p>}
+    {note && <p class="note">{note}</p>}
   </div>
 </Tag>
 
@@ -65,6 +75,8 @@ const Tag = href ? 'a' : 'div';
   p { margin: 0; }
   .summary { font-size: 16px; line-height: 1.55; }
   .tags { font-size: 14px; color: var(--ink-soft); }
+  .kicker { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); }
   .more { margin-top: auto; padding-top: 8px; font-weight: 700; color: var(--accent); }
-  .note { margin-top: auto; padding-top: 8px; font-size: 14px; color: var(--ink-soft); }
+  .note { padding-top: 4px; font-size: 14px; color: var(--ink-soft); }
+  .note:only-of-type { margin-top: auto; }
 </style>
