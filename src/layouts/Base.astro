@@ -23,12 +23,15 @@ const {
 <!doctype html>
 <html lang={lang}>
   <head>
-    <!-- Apply a saved light/dark choice before the page paints, so it never flashes. -->
+    <!-- Apply the theme before the page paints, so it never flashes.
+         data-theme-pref is the choice (auto, light or dark); data-theme is what shows. -->
     <script is:inline>
-      try {
-        const saved = localStorage.getItem('theme');
-        if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
-      } catch (e) {}
+      (function () {
+        var root = document.documentElement, pref = 'auto';
+        try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') pref = t; } catch (e) {}
+        root.dataset.themePref = pref;
+        root.dataset.theme = pref === 'auto' ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : pref;
+      })();
     </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
